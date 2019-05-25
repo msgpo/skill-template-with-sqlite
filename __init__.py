@@ -37,10 +37,10 @@ from urllib.request import urlopen
 # Named to avoid confusion with the built-in SQLite libraries
 class BufordSQLite:
     # The constructor of the skill, which calls MycroftSkill's constructor
-    def __init__(self):
+    def __init__(self, path=""):
         # Use any name that you want here
         # TODO - this saves to the mycroft-core directory by default
-        self.conn = sqlite3.connect('buford.db')
+        self.conn = sqlite3.connect(path + 'buford.db')
 
     # Query that returns nothing (e.g. INSERT)
     def emptyQuery(self, query):
@@ -70,13 +70,14 @@ class SQLiteDemoSkill(MycroftSkill):
     def __init__(self):
         super(SQLiteDemoSkill, self).__init__(name="SQLiteDemoSkill")
         
+        
         # TODO: Initialize working variables used within the skill.
 
     # Runs the SQLite Demo
     @intent_handler(IntentBuilder("RunSQLiteDemoIntent").require("Demo"))
     def handle_sqlite_demo_intent(self, message):
         self.speak("Running the SQLite Demo")
-        conn = BufordSQLite()
+        conn = BufordSQLite(self.file_system)
         tablequery = "CREATE TABLE IF NOT EXISTS names (first_name TEXT, last_name TEXT)"
         insertquery = "INSERT INTO names (first_name, last_name) VALUES ('Reinhardt', 'Wilhelm')"
         insertquery2 = "INSERT INTO names (first_name, last_name) VALUES ('Amelie', 'Lacroix')"
