@@ -69,7 +69,7 @@ class SQLiteDemoSkill(MycroftSkill):
     # The constructor of the skill, which calls MycroftSkill's constructor
     def __init__(self):
         super(SQLiteDemoSkill, self).__init__(name="SQLiteDemoSkill")
-        
+
         
         # TODO: Initialize working variables used within the skill.
 
@@ -77,7 +77,7 @@ class SQLiteDemoSkill(MycroftSkill):
     @intent_handler(IntentBuilder("RunSQLiteDemoIntent").require("Demo"))
     def handle_sqlite_demo_intent(self, message):
         self.speak("Running the SQLite Demo")
-        conn = BufordSQLite(self.file_system)
+        conn = BufordSQLite(self.file_system.path)
         tablequery = "CREATE TABLE IF NOT EXISTS names (first_name TEXT, last_name TEXT)"
         insertquery = "INSERT INTO names (first_name, last_name) VALUES ('Reinhardt', 'Wilhelm')"
         insertquery2 = "INSERT INTO names (first_name, last_name) VALUES ('Amelie', 'Lacroix')"
